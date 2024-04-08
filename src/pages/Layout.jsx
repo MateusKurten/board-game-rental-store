@@ -6,11 +6,13 @@ export default function Layout() {
 
     return (
         <>
-          <Header />
-          <div>
-            <Outlet />
+          <div className="flex flex-col min-h-screen">
+            <div className="flex-1">
+              <Header />
+              <Outlet />
+            </div>
+            <CustomFooter />
           </div>
-          <CustomFooter />
         </>
     )
 };

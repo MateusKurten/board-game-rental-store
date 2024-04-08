@@ -7,7 +7,7 @@ export default function App() {
   const dados = [
     {
       'id': "1",
-      'item': 'Dobble',
+      'game': 'Dobble',
       'img': 'super-speed-racing.png',
       'difficulty': 'Easy',
       'minplayers': '2',
@@ -17,7 +17,7 @@ export default function App() {
     },
     {
       'id': "2",
-      'item': 'Ticket to Ride',
+      'game': 'Ticket to Ride',
       'img': 'super-speed-racing.png',
       'difficulty': 'Medium',
       'minplayers': '2',
@@ -27,7 +27,7 @@ export default function App() {
     },
     {
       'id': "3",
-      'item': 'Magic: The Gathering',
+      'game': 'Magic: The Gathering',
       'img': 'super-speed-racing.png',
       'difficulty': 'Hard',
       'minplayers': '2',

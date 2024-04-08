@@ -7,13 +7,13 @@ import { MdAccessTime } from "react-icons/md";
 import { Link } from "react-router-dom"
 import { HiOutlineArrowRight} from "react-icons/hi";
 
-export default function Item({item, img, price, difficulty, maxplayers, minplayers, roundtime}) {
+export default function Item({game, img, price, difficulty, maxplayers, minplayers, roundtime}) {
 
 
     return (
         <Card
           className="max-w-sm"
-          imgAlt={item}
+          imgAlt={game}
           imgSrc={getImageURL(img)}
           theme={{
             "root": {
@@ -25,7 +25,7 @@ export default function Item({item, img, price, difficulty, maxplayers, minplaye
           <div className="flex flex-wrap flex-col">
             <Badge className="w-fit" color={getDifficultyColor(difficulty)}>{difficulty}</Badge>
             <h5 className="mt-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-              {item}
+              {game}
             </h5>
           </div>
           <div className="flex flex-wrap flex-col">
