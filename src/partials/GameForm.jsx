@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-// import { addReservation } from "../../infra/reservations";
+import { addGame } from "../infra/games";
 import { Card } from "flowbite-react"
 
 export default function GameForm() {
@@ -7,8 +7,9 @@ export default function GameForm() {
   const { register, handleSubmit, formState: { errors }, reset, getValues } = useForm({ mode: 'onChange' });
 
   async function submitData(data) {
-    console.log(data);
-    // let id = await addReservation(data);
+    // data.img = data.img[0].name;
+    data.img = 'super-speed-racing.png';
+    let id = await addGame(data);
     // setReservationId(id);
     // reset();
   }
@@ -20,14 +21,14 @@ export default function GameForm() {
           <label htmlFor="game" className=" mb-2 text-sm font-medium text-gray-900 dark:text-white">Game</label>
           <input
             type="text"
-            id="item"
+            id="game"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5"
             required
-            {...register('item', {
-              required: "You must inform event description.",
+            {...register('game', {
+              required: "You must inform game title.",
               validate: {
-                minLength: (value) => value.length >= 3 || "Description must have at least 3 characters",
-                maxLength: (value) => value.length <= 50 || "Description can not have more than 50 characters",
+                minLength: (value) => value.length >= 3 || "Game title must have at least 3 characters",
+                maxLength: (value) => value.length <= 50 || "Game title can not have more than 50 characters",
               },
             })}
           />
@@ -43,9 +44,9 @@ export default function GameForm() {
               required: "You must inform game difficulty."
             })}
           >
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
           </select>
         </div>
         <div className="mb-5 col-span-full">

@@ -1,49 +1,24 @@
 import Item from "../components/Item";
-import { Button } from "flowbite-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { listGames } from "../infra/games";
 
 export default function App() {
 
-  const dados = [
-    {
-      'id': "1",
-      'game': 'Dobble',
-      'img': 'super-speed-racing.png',
-      'difficulty': 'Easy',
-      'minplayers': '2',
-      'maxplayers': '8',
-      'price': '40',
-      'roundtime': '5 min'
-    },
-    {
-      'id': "2",
-      'game': 'Ticket to Ride',
-      'img': 'super-speed-racing.png',
-      'difficulty': 'Medium',
-      'minplayers': '2',
-      'maxplayers': '8',
-      'price': '120',
-      'roundtime': '1 h'
-    },
-    {
-      'id': "3",
-      'game': 'Magic: The Gathering',
-      'img': 'super-speed-racing.png',
-      'difficulty': 'Hard',
-      'minplayers': '2',
-      'maxplayers': '2',
-      'price': '30',
-      'roundtime': '25 min'
-    },
-  ]
+  const [games, setGames] = useState([]);
 
-  const [data, setData] = useState(dados);
+  useEffect(() => {
+    async function fetchData() {
+      let data = await listGames();
+      setGames(data);
+    }
+    fetchData();
+  }, []);
 
   return (
     <>
       <div className="flex flex-wrap justify-center gap-4 p-4 sm:mx-24">
         {
-          data.map(value =>
+          games.map(value =>
             <Item key={value.id} {...value}/>
           )
         }

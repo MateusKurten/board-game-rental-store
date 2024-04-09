@@ -9,7 +9,6 @@ import { HiOutlineArrowRight} from "react-icons/hi";
 
 export default function Item({game, img, price, difficulty, maxplayers, minplayers, roundtime}) {
 
-
     return (
         <Card
           className="max-w-sm"
