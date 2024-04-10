@@ -16,6 +16,7 @@ export default function GameForm() {
 
   return (
     <>
+      <h5 className="text-3xl">Add game to collection</h5>
       <form className="mt-5 grid grid-cols-4 px-12 gap-x-4" onSubmit={handleSubmit(submitData)}>
         <div className="mb-5 col-span-3">
           <label htmlFor="game" className=" mb-2 text-sm font-medium text-gray-900 dark:text-white">Game</label>

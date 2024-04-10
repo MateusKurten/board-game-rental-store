@@ -7,15 +7,17 @@ export default function AdminArea() {
     <>
       <Accordion collapseAll className="lg:mx-64 my-4 bg-white">
         <Accordion.Panel>
-          <Accordion.Title>Add game to catalog</Accordion.Title>
+          <Accordion.Title>Games</Accordion.Title>
           <Accordion.Content>
             <GameForm />
+            <hr className="my-4"></hr>
+            GameTable
           </Accordion.Content>
         </Accordion.Panel>
         <Accordion.Panel>
-          <Accordion.Title>Add item to carousel</Accordion.Title>
+          <Accordion.Title>Carousel</Accordion.Title>
           <Accordion.Content>
-            CarousemItemForm
+            Carousel
           </Accordion.Content>
         </Accordion.Panel>
       </Accordion>
