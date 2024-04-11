@@ -1,15 +1,26 @@
 import { useForm } from "react-hook-form";
 import { addGame } from "../infra/games";
+import { storage } from "../infra/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { Card } from "flowbite-react"
 
 export default function GameForm() {
 
   const { register, handleSubmit, formState: { errors }, reset, getValues } = useForm({ mode: 'onChange' });
+  let id = "";
 
   async function submitData(data) {
-    // data.img = data.img[0].name;
-    data.img = 'super-speed-racing.png';
-    let id = await addGame(data);
+    const imageRef = ref(storage, `images/${data.img[0].name}`) //tratar com uuid
+    uploadBytes(imageRef, data.img[0])
+      .then((snapshot) => {
+        getDownloadURL(snapshot.ref)
+          .then((url) => {
+            data.img = url;
+          })
+          .then(async() => id = console.log(await addGame(data)))
+          .then(() => alert("Game added to the catalog!"))
+          .then(() => reset());
+      });
     // setReservationId(id);
     // reset();
   }

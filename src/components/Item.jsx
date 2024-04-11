@@ -12,8 +12,7 @@ export default function Item({game, img, price, difficulty, maxplayers, minplaye
     return (
         <Card
           className="max-w-sm"
-          imgAlt={game}
-          imgSrc={getImageURL(img)}
+          renderImage={() => <img width={400} src={img} alt={game} />}
           theme={{
             "root": {
               "children": "flex h-full flex-col justify-center gap-2 p-4",
@@ -29,7 +28,7 @@ export default function Item({game, img, price, difficulty, maxplayers, minplaye
           </div>
           <div className="flex flex-wrap flex-col">
             <span className="text-sm mr-2"><LuUsers className="inline" /> {maxplayers == minplayers ? maxplayers : `${minplayers} - ${maxplayers}`}</span>
-            <span className="text-sm"><MdAccessTime className="inline" /> {roundtime}</span>
+            <span className="text-sm"><MdAccessTime className="inline" /> {roundtime} min</span>
           </div>
         </div>
         <div className="flex items-center justify-between">
