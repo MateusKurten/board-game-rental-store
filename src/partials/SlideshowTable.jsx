@@ -4,6 +4,8 @@ import { useState, useEffect, useContext } from 'react';
 import { Button } from 'flowbite-react'
 import SlideOrderForm from './SlideOrderForm'
 import { AppContext } from '../AppContext';
+import { v4 } from 'uuid';
+
 
 export default function SlideshowTable() {
 
@@ -16,7 +18,7 @@ export default function SlideshowTable() {
 
   function handleDelete() {
     selectedSlides.forEach(slide => deleteSlide(slide.id).then(setSelectedSlides([])));
-    setSlideAction(`delete-${selectedSlides[0].id}`);
+    setSlideAction(`delete-${v4()}`);
   }
 
   useEffect(() => {

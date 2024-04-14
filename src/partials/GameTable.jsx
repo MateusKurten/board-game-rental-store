@@ -3,6 +3,7 @@ import DataTable from 'react-data-table-component';
 import { useState, useEffect, useContext } from 'react';
 import { Button } from 'flowbite-react'
 import { AppContext } from '../AppContext';
+import { v4 } from 'uuid';
 
 export default function GameTable() {
 
@@ -15,7 +16,7 @@ export default function GameTable() {
 
   function handleDelete() {
     selectedGames.forEach(game => deleteGame(game.id).then(setSelectedGames([])));
-    setGameAction(`delete-${selectedGames[0].id}`);
+    setGameAction(`delete-${v4()}`);
   }
 
   useEffect(() => {
