@@ -1,11 +1,8 @@
 import React from "react";
-import { Card, Button, Badge } from "flowbite-react";
-import { getImageURL } from "../utils/image-util";
+import { Card, Badge } from "flowbite-react";
 import { getDifficultyColor } from "../utils/difficulty-util";
 import { LuUsers } from "react-icons/lu";
 import { MdAccessTime } from "react-icons/md";
-import { Link } from "react-router-dom"
-import { HiOutlineArrowRight} from "react-icons/hi";
 
 export default function Item({game, img, price, difficulty, maxplayers, minplayers, roundtime}) {
 
@@ -33,10 +30,6 @@ export default function Item({game, img, price, difficulty, maxplayers, minplaye
         </div>
         <div className="flex items-center justify-between">
           <span className="text-xl font-bold text-gray-900 dark:text-white">{`R$${price}/day`}</span>
-          <Button as={Link} to={"/"} size="xs">
-            Info
-            <HiOutlineArrowRight className="ml-2 h-5 w-5" />
-          </Button>
         </div>
       </Card>
     )

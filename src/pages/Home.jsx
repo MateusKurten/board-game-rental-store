@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div >
       <Slideshow />
-      <GameCounter total="32" available="20" />
+      <GameCounter total="32"/>
     </div>
   )
 }

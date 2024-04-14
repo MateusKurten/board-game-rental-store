@@ -10,6 +10,7 @@ export default function GameForm() {
   let id = "";
 
   async function submitData(data) {
+    console.log(data.img);
     const imageRef = ref(storage, `images/${data.img[0].name}`) //tratar com uuid
     uploadBytes(imageRef, data.img[0])
       .then((snapshot) => {
@@ -17,7 +18,7 @@ export default function GameForm() {
           .then((url) => {
             data.img = url;
           })
-          .then(async() => id = console.log(await addGame(data)))
+          .then(async() => id = console.log(await addGame(data))) //setReservationId
           .then(() => alert("Game added to the catalog!"))
           .then(() => reset());
       });
@@ -28,9 +29,9 @@ export default function GameForm() {
   return (
     <>
       <h5 className="text-3xl">Add game to collection</h5>
-      <form className="mt-5 grid grid-cols-4 px-12 gap-x-4" onSubmit={handleSubmit(submitData)}>
-        <div className="mb-5 col-span-3">
-          <label htmlFor="game" className=" mb-2 text-sm font-medium text-gray-900 dark:text-white">Game</label>
+      <form className="mt-5 grid grid-cols-4 px-4 gap-x-4" onSubmit={handleSubmit(submitData)}>
+        <div className="mb-5 col-span-full md:col-span-3">
+          <label htmlFor="game" className="mb-2 text-sm font-medium text-gray-900 dark:text-white">Game</label>
           <input
             type="text"
             id="game"
@@ -45,8 +46,8 @@ export default function GameForm() {
             })}
           />
         </div>
-        <div className="mb-5">
-          <label htmlFor="difficulty" className=" mb-2 text-sm font-medium text-gray-900 dark:text-white">Difficulty</label>
+        <div className="mb-5 col-span-full md:col-span-1">
+          <label htmlFor="difficulty" className="mb-2 text-sm font-medium text-gray-900 dark:text-white">Difficulty</label>
           <select
             name="difficulty"
             required
@@ -71,7 +72,7 @@ export default function GameForm() {
             {...register('img')}
           />
         </div>
-        <div className="mb-5 col-span-2 md:col-span-1">
+        <div className="mb-5 col-span-full sm:col-span-2 md:col-span-1">
           <label htmlFor="roundtime" className="mb-2 text-sm font-medium text-gray-900 dark:text-white">Round Time (minutes)</label>
           <input
             type="number"
@@ -86,7 +87,7 @@ export default function GameForm() {
             })}
           />
         </div>
-        <div className="mb-5 col-span-2 md:col-span-1">
+        <div className="mb-5 col-span-full sm:col-span-2 md:col-span-1">
           <label htmlFor="price" className="mb-2 text-sm font-medium text-gray-900 dark:text-white">Price (R$/day)</label>
           <input
             type="number"

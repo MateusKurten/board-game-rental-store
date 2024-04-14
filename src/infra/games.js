@@ -9,13 +9,12 @@ export async function addGame(reservation) {
     return docRef.id;
 }
 
-// export async function deleteReservation(reservationId) {
-//     console.log("Executando deleteReservations");
-//     const docRef = doc(db, 'reservations', reservationId);
-//     console.log(docRef);
+export async function deleteGame(gameId) {
+    console.log("Executando deleteGame");
+    const docRef = doc(db, 'games', gameId);
 
-//     await deleteDoc(docRef);
-// }
+    await deleteDoc(docRef);
+}
 
 export async function listGames() {
   console.log("listGames");
