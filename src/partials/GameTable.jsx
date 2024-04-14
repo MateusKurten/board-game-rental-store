@@ -34,7 +34,7 @@ export default function GameTable() {
     },
     {
       name: 'Price',
-      selector: row => ` R$ ${row.minplayers}/day`,
+      selector: row => ` R$ ${row.price}/day`,
       sortable: true
     },
     {
