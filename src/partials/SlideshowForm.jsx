@@ -12,7 +12,7 @@ export default function SlideshowForm() {
   const { setSlideAction } = useContext(AppContext);
 
   async function submitData(data) {
-    const imageRef = ref(storage, `images/${data.img[0].name}` + v4()); //tratar com uuid
+    const imageRef = ref(storage, `images/${data.img[0].name}` + v4());
     uploadBytes(imageRef, data.img[0])
       .then((snapshot) => {
         getDownloadURL(snapshot.ref)

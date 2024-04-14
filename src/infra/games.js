@@ -1,5 +1,5 @@
 import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
-import { db } from "./firebase"
+import { db } from "./firebase";
 
 export async function addGame(game) {
     const docRef = await addDoc(collection(db, "games"), game);
