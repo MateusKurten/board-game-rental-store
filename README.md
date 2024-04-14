@@ -1,6 +1,6 @@
 # Board Game Rental Website
 
-This application is built for studying React. It simulates a board game rental website where users can manage offered games, as well as manage slides that appear on the homepage.
+This application was developed by Mateus Kürten Rodrigues as part of the Infnet Fullstack postgraduate course. It simulates a board game rental website where users can manage offered games, as well as manage slides that appear on the homepage.
 
 ## Live Example
 
