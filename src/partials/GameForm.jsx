@@ -4,6 +4,7 @@ import { storage } from "../infra/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { useContext } from "react";
 import { AppContext } from "../AppContext";
+import { v4 } from 'uuid';
 
 export default function GameForm() {
 
@@ -11,7 +12,7 @@ export default function GameForm() {
   const { setGameAction } = useContext(AppContext);
 
   async function submitData(data) {
-    const imageRef = ref(storage, `images/${data.img[0].name}`) //tratar com uuid
+    const imageRef = ref(storage, `images/${data.img[0].name}` + v4()) //tratar com uuid
     uploadBytes(imageRef, data.img[0])
       .then((snapshot) => {
         getDownloadURL(snapshot.ref)

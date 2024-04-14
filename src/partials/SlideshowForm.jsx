@@ -2,9 +2,9 @@ import { useForm } from "react-hook-form";
 import { addSlide } from "../infra/slideshow";
 import { storage } from "../infra/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
-import { Card } from "flowbite-react"
 import { useContext } from "react";
 import { AppContext } from "../AppContext";
+import { v4 } from "uuid";
 
 export default function SlideshowForm() {
 
@@ -12,7 +12,7 @@ export default function SlideshowForm() {
   const { setSlideAction } = useContext(AppContext);
 
   async function submitData(data) {
-    const imageRef = ref(storage, `images/${data.img[0].name}`) //tratar com uuid
+    const imageRef = ref(storage, `images/${data.img[0].name}` + v4()); //tratar com uuid
     uploadBytes(imageRef, data.img[0])
       .then((snapshot) => {
         getDownloadURL(snapshot.ref)
