@@ -2,15 +2,15 @@ import { useForm } from "react-hook-form";
 import { addGame } from "../infra/games";
 import { storage } from "../infra/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
-import { Card } from "flowbite-react"
+import { useContext } from "react";
+import { AppContext } from "../AppContext";
 
 export default function GameForm() {
 
-  const { register, handleSubmit, formState: { errors }, reset, getValues } = useForm({ mode: 'onChange' });
-  let id = "";
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({ mode: 'onChange' });
+  const { setGameAction } = useContext(AppContext);
 
   async function submitData(data) {
-    console.log(data.img);
     const imageRef = ref(storage, `images/${data.img[0].name}`) //tratar com uuid
     uploadBytes(imageRef, data.img[0])
       .then((snapshot) => {
@@ -18,12 +18,11 @@ export default function GameForm() {
           .then((url) => {
             data.img = url;
           })
-          .then(async() => id = console.log(await addGame(data))) //setReservationId
+          .then(() => addGame(data))
+          .then((id) => setGameAction(`created-${id}`))
           .then(() => alert("Game added to the catalog!"))
           .then(() => reset());
       });
-    // setReservationId(id);
-    // reset();
   }
 
   return (

@@ -1,10 +1,11 @@
 import { Carousel } from "flowbite-react";
-import { getImageURL } from "../utils/image-util";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { listSlides } from "../infra/slideshow";
+import { AppContext } from "../AppContext";
 
 export default function Slideshow() {
-  const [slides, setSlides] = useState([]);
+
+  const { slides, setSlides, slideAction } = useContext(AppContext)
 
   useEffect(() => {
     async function fetchData() {
@@ -12,7 +13,7 @@ export default function Slideshow() {
       setSlides(data);
     }
     fetchData();
-  }, []);
+  }, [slideAction]);
 
   return (
     <Carousel 

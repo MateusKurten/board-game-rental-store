@@ -1,14 +1,13 @@
 import { listSlides, deleteSlide } from '../infra/slideshow';
 import DataTable from 'react-data-table-component';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Button } from 'flowbite-react'
 import SlideOrderForm from './SlideOrderForm'
-import { useForm } from 'react-hook-form';
+import { AppContext } from '../AppContext';
 
 export default function SlideshowTable() {
 
-  const [slides, setSlides] = useState([]);  // PASSAR VIA CONTEXTO
-  const [slideAction, setSlideAction] = useState(); // PASSAR VIA CONTEXTO
+  const { slides, setSlides, slideAction, setSlideAction } = useContext(AppContext);
   const [selectedSlides, setSelectedSlides] = useState([]);
 
   function handleRowSelect(selected) {
@@ -20,17 +19,13 @@ export default function SlideshowTable() {
     setSlideAction(`delete-${selectedSlides[0].id}`);
   }
 
-  function submitData(data){
-    console.log(data);
-  }
-
   useEffect(() => {
     async function fetchData() {
       let data = await listSlides();
       setSlides(data);
     }
     fetchData();
-  }, [slideAction]); //PASSAR VIA CONTEXTO
+  }, [slideAction]);
 
   const columns = [
     {

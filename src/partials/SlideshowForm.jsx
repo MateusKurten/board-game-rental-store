@@ -3,14 +3,15 @@ import { addSlide } from "../infra/slideshow";
 import { storage } from "../infra/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { Card } from "flowbite-react"
+import { useContext } from "react";
+import { AppContext } from "../AppContext";
 
 export default function SlideshowForm() {
 
   const { register, handleSubmit, formState: { errors }, reset, getValues } = useForm({ mode: 'onChange' });
-  let id = "";
+  const { setSlideAction } = useContext(AppContext);
 
   async function submitData(data) {
-    console.log(data.img);
     const imageRef = ref(storage, `images/${data.img[0].name}`) //tratar com uuid
     uploadBytes(imageRef, data.img[0])
       .then((snapshot) => {
@@ -18,12 +19,11 @@ export default function SlideshowForm() {
           .then((url) => {
             data.img = url;
           })
-          .then(async() => id = console.log(await addSlide(data))) //setReservationId
+          .then(() => addSlide(data))
+          .then((id) => setSlideAction(`created-${id}`))
           .then(() => alert("Slide created!"))
           .then(() => reset());
       });
-    // setReservationId(id);
-    // reset();
   }
 
   return (

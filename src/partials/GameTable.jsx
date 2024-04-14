@@ -1,13 +1,13 @@
 import { listGames, deleteGame } from '../infra/games';
 import DataTable from 'react-data-table-component';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Button } from 'flowbite-react'
+import { AppContext } from '../AppContext';
 
 export default function GameTable() {
 
-  const [games, setGames] = useState([]); // PASSAR VIA CONTEXTO
-  const [gameAction, setGameAction] = useState(); // PASSAR VIA CONTEXTO
   const [selectedGames, setSelectedGames] = useState([]);
+  const {games, setGames, gameAction, setGameAction} = useContext(AppContext);
 
   function handleRowSelect(selected) {
     setSelectedGames(selected.selectedRows);
@@ -24,7 +24,7 @@ export default function GameTable() {
       setGames(data);
     }
     fetchData();
-  }, [gameAction]); //PASSAR VIA CONTEXTO
+  }, [gameAction]);
 
   const columns = [
     {
@@ -49,12 +49,12 @@ export default function GameTable() {
     },
     {
       name: 'Max. Players',
-      selector: row => row.minplayers,
+      selector: row => row.maxplayers,
       sortable: true
     },
     {
       name: 'Round Time',
-      selector: row => row.minplayers,
+      selector: row => row.roundtime,
       sortable: true
     },
   ];

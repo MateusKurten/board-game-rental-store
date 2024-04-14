@@ -1,14 +1,18 @@
 import { useForm } from "react-hook-form";
 import { Button } from "flowbite-react";
 import { updateOrder } from "../infra/slideshow";
+import { useContext } from "react";
+import { AppContext } from "../AppContext";
 
 export default function SlideOrderForm({slideId, slideOrder}) {
 
   const { register, handleSubmit } = useForm({ mode: 'onChange' });
+  const { setSlideAction } = useContext(AppContext);
 
   function submitData(data) {
-    console.log(data);
-    updateOrder(data).then(alert('Slide order was successfully updated'));
+    updateOrder(data)
+    .then((id) => setSlideAction(`update-${id}`))
+    .then(alert('Slide order was successfully updated'));
   }
 
   return (

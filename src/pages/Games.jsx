@@ -1,10 +1,12 @@
 import Item from "../components/Item";
 import { useState, useEffect } from "react";
 import { listGames } from "../infra/games";
+import { AppContext } from "../AppContext";
+import { useContext } from "react";
 
 export default function App() {
 
-  const [games, setGames] = useState([]);
+  const {games, setGames, gameAction} = useContext(AppContext);
 
   useEffect(() => {
     async function fetchData() {
@@ -12,7 +14,7 @@ export default function App() {
       setGames(data);
     }
     fetchData();
-  }, []);
+  }, [gameAction]);
 
   return (
     <>
