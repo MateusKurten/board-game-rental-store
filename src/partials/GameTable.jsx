@@ -54,7 +54,7 @@ export default function GameTable() {
     },
     {
       name: 'Round Time',
-      selector: row => row.roundtime,
+      selector: row => `${row.roundtime} minutes`,
       sortable: true
     },
   ];
