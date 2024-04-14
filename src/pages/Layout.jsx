@@ -10,20 +10,22 @@ export default function Layout() {
   const [slides, setSlides] = useState([]);
   const [gameAction, setGameAction] = useState();
   const [slideAction, setSlideAction] = useState();
+  const [user, setUser] = useState({id:"", email:"", password:""});
 
   return (
     <>
       <div className="flex flex-col min-h-screen">
         <div className="flex-1">
-          <Header />
           <AppContext.Provider value={
             {
               games, setGames,
               slides, setSlides,
               gameAction, setGameAction,
-              slideAction, setSlideAction
+              slideAction, setSlideAction,
+              user, setUser
             }
           }>
+            <Header />
             <Outlet />
           </AppContext.Provider>
         </div>

@@ -1,8 +1,14 @@
 import { Link }  from "react-router-dom";
 import { Navbar } from "flowbite-react";
+import User from "./User"
 import { getImageURL } from "../utils/image-util";
+import { useContext } from "react";
+import { AppContext } from "../AppContext";
 
 export default function Header() {
+
+  const { user } = useContext(AppContext);
+
   return (
     <Navbar 
       fluid className="border p-6 justify-around shadow-md"
@@ -26,9 +32,12 @@ export default function Header() {
         <Navbar.Link as={Link} to={"/games"} className="text-xl">
           Games
         </Navbar.Link>
-        <Navbar.Link as={Link} to={"/admin"} className="text-xl">
-          Admin Area
-        </Navbar.Link>
+        { user.id &&
+          <Navbar.Link as={Link} to={"/admin"} className="text-xl">
+            Admin Area
+          </Navbar.Link>
+        }
+        <User />
       </Navbar.Collapse>
     </Navbar>
   );

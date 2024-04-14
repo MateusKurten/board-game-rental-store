@@ -8,7 +8,7 @@ import { AppContext } from "../AppContext";
 
 export default function SlideshowForm() {
 
-  const { register, handleSubmit, formState: { errors }, reset, getValues } = useForm({ mode: 'onChange' });
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({ mode: 'onChange' });
   const { setSlideAction } = useContext(AppContext);
 
   async function submitData(data) {
@@ -34,7 +34,6 @@ export default function SlideshowForm() {
           <label htmlFor="img" className="mb-2 text-sm font-medium text-gray-900 dark:text-white">Image</label>
           <input
             type="file"
-            id="img"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5"
             required
             {...register('img')}
@@ -44,7 +43,6 @@ export default function SlideshowForm() {
           <label htmlFor="order" className="mb-2 text-sm font-medium text-gray-900 dark:text-white">Order</label>
           <input
             type="number"
-            id="order"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-full p-2.5"
             required
             {...register('order', {

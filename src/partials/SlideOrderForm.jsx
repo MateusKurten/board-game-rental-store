@@ -16,10 +16,9 @@ export default function SlideOrderForm({slideId, slideOrder}) {
   }
 
   return (
-    <form className='grid grid-cols-1 sm:grid-cols-2 gap-y-2' onSubmit={handleSubmit(submitData)}>
+    <form className='grid grid-cols-1 sm:grid-cols-2 gap-y-2 my-2' onSubmit={handleSubmit(submitData)}>
       <input 
-        type="number" 
-        id='order' 
+        type="number"
         className='w-16'
         placeholder={slideOrder}
         {...register(slideId)} />
