@@ -1,6 +1,6 @@
 import Item from "../components/Item";
 import { useState, useEffect } from "react";
-import { listGames } from "../infra/games";
+import axios from "axios";
 import { AppContext } from "../AppContext";
 import { useContext } from "react";
 
@@ -10,8 +10,11 @@ export default function App() {
 
   useEffect(() => {
     async function fetchData() {
-      let data = await listGames();
-      setGames(data);
+      // axios.get("https://firebaseapp-iom2ksf4eq-uc.a.run.app/games")
+      axios.get("http://localhost:5001/board-game-rental-store/us-central1/firebaseApp/games")
+        .then(res => {
+          setGames(res.data);
+        })
     }
     fetchData();
   }, [gameAction]);

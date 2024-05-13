@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
-import { addGame } from "../infra/games";
+// import { addGame } from "../infra/games";
+import axios from "axios"
 import { storage } from "../infra/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { useContext } from "react";
@@ -9,7 +10,7 @@ import { v4 } from 'uuid';
 export default function GameForm() {
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm({ mode: 'onChange' });
-  const { setGameAction } = useContext(AppContext);
+  const { setGameAction, gameAction } = useContext(AppContext);
 
   async function submitData(data) {
     const imageRef = ref(storage, `images/${data.img[0].name}` + v4())
@@ -19,11 +20,12 @@ export default function GameForm() {
           .then((url) => {
             data.img = url;
           })
-          .then(() => addGame(data))
-          .then((id) => setGameAction(`created-${id}`))
+          .then(() => axios.post("http://localhost:5001/board-game-rental-store/us-central1/firebaseApp/games/add", data)
+            .then(res => setGameAction(`created-${res.data.id}`))
+          )
           .then(() => alert("Game added to the catalog!"))
           .then(() => reset());
-      });
+      }).then(console.log(gameAction));
   }
 
   return (
@@ -107,9 +109,6 @@ export default function GameForm() {
             required
             {...register('minplayers', {
               required: "You must inform minimum number of players.",
-              // validate: {
-              //   min: (value) => value <= getValues().maxplayers || "Minimum number of players should be less or equal to maximum number of players"
-              // }
             })}
           />
         </div>
