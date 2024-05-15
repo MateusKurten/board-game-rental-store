@@ -10,7 +10,7 @@ import { v4 } from 'uuid';
 export default function GameForm() {
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm({ mode: 'onChange' });
-  const { setGameAction, gameAction } = useContext(AppContext);
+  const { setGameAction, gameAction, user } = useContext(AppContext);
 
   async function submitData(data) {
     const imageRef = ref(storage, `images/${data.img[0].name}` + v4())
@@ -20,7 +20,7 @@ export default function GameForm() {
           .then((url) => {
             data.img = url;
           })
-          .then(() => axios.post("http://localhost:5001/board-game-rental-store/us-central1/firebaseApp/games/add", data)
+          .then(() => axios.post("http://localhost:5001/board-game-rental-store/us-central1/firebaseApp/games/add", {...data, userId: user.id})
             .then(res => setGameAction(`created-${res.data.id}`))
           )
           .then(() => alert("Game added to the catalog!"))

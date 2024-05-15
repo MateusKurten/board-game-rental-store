@@ -8,10 +8,10 @@ import axios from "axios";
 
 export default function GameTable() {
 
-  const {games, setGames, gameAction, setGameAction} = useContext(AppContext);
+  const {games, setGames, gameAction, setGameAction, user} = useContext(AppContext);
 
   const handleDelete = (state) => {
-    axios.delete(`http://localhost:5001/board-game-rental-store/us-central1/firebaseApp/games/delete/${state.id}`)
+    axios.delete(`http://localhost:5001/board-game-rental-store/us-central1/firebaseApp/games/delete/${state.id}`, { data: {userId: user.id } })
       .then(res => alert(res.data.message))
       .then(() => { setGameAction(`delete-${v4()}`); })
   };
@@ -60,7 +60,6 @@ export default function GameTable() {
     },
     {
       name: 'Actions',
-      button: true,
       cell: (props) => (
         <a
           className='hover:cursor-pointer'

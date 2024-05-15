@@ -1,5 +1,6 @@
 import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './firebase';
+import { collection, addDoc } from "firebase/firestore";
 
 export function userLogin(setUser, userData) {
     signInWithEmailAndPassword(auth, userData.email, userData.password)
@@ -29,6 +30,7 @@ export function createAccount(user, setUser) {
     createUserWithEmailAndPassword(auth, user.email, user.password)
         .then((credenciais) => {
             setUser((obj) => {
+                addDoc(collection(db, "users"), {uid: credenciais.user.uid});
                 const r = {
                     ...obj,
                     ["id"]: credenciais.user.uid,
