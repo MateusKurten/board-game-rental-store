@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { AppContext } from "../AppContext";
 import { Dropdown, Label, TextInput, Button } from "flowbite-react"
 import { useForm } from "react-hook-form";
-import { userLogin, userLogout } from "../infra/users";
+import axios from "axios";
 
 export default function User() {
 
@@ -10,12 +10,17 @@ export default function User() {
   const { user, setUser } = useContext(AppContext);
 
   function handleClick() {
-    userLogout(setUser);
     alert("You have logged off!");
+    setUser({id:"", email:"", password:""});
   }
 
   function submitData(data) {
-    userLogin(setUser, data)
+    axios.post("http://127.0.0.1:3333/user/login", {
+      email: data.email,
+      password: data.password,
+    })
+    .then((res) => setUser(res.data))
+    .catch((error) => alert(error.response.data.message));
   }
 
   return (

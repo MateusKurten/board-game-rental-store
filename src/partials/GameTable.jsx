@@ -1,7 +1,5 @@
-import { deleteGame } from '../infra/games';
 import DataTable from 'react-data-table-component';
-import { useState, useEffect, useContext } from 'react';
-import { Button } from 'flowbite-react'
+import { useEffect, useContext } from 'react';
 import { AppContext } from '../AppContext';
 import { v4 } from 'uuid';
 import axios from "axios";
@@ -11,15 +9,14 @@ export default function GameTable() {
   const {games, setGames, gameAction, setGameAction, user} = useContext(AppContext);
 
   const handleDelete = (state) => {
-    axios.delete(`http://localhost:5001/board-game-rental-store/us-central1/firebaseApp/games/delete/${state.id}`, { data: {userId: user.id } })
-      .then(res => alert(res.data.message))
-      .then(() => { setGameAction(`delete-${v4()}`); })
+    axios.delete(`http://127.0.0.1:3333/games/delete/${state.id}`, { data: {userId: user.id } })
+      .then(alert("Game deleted successfully"))
+      .then(setGameAction(`delete-${v4()}`));
   };
 
   useEffect(() => {
     async function fetchData() {
-      // axios.get("https://firebaseapp-iom2ksf4eq-uc.a.run.app/games")
-      axios.get("http://localhost:5001/board-game-rental-store/us-central1/firebaseApp/games")
+      axios.get("http://127.0.0.1:3333/games")
         .then(res => {
           setGames(res.data);
         })

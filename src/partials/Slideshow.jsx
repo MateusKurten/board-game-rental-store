@@ -1,7 +1,7 @@
 import { Carousel } from "flowbite-react";
 import { useContext, useEffect, useState } from "react";
-import { listSlides } from "../infra/slideshow";
 import { AppContext } from "../AppContext";
+import axios from "axios";
 
 export default function Slideshow() {
 
@@ -9,8 +9,10 @@ export default function Slideshow() {
 
   useEffect(() => {
     async function fetchData() {
-      let data = await listSlides();
-      setSlides(data);
+      axios.get("http://localhost:3333/slides")
+        .then(res => {
+          setSlides(res.data.sort((a,b) => a.order - b.order));
+        })
     }
     fetchData();
   }, [slideAction]);

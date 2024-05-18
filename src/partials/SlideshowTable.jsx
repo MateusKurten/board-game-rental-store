@@ -1,30 +1,27 @@
-import { listSlides, deleteSlide } from '../infra/slideshow';
 import DataTable from 'react-data-table-component';
-import { useState, useEffect, useContext } from 'react';
-import { Button } from 'flowbite-react'
+import { useEffect, useContext } from 'react';
 import SlideOrderForm from './SlideOrderForm'
 import { AppContext } from '../AppContext';
 import { v4 } from 'uuid';
+import axios from "axios";
 
 
 export default function SlideshowTable() {
 
-  const { slides, setSlides, slideAction, setSlideAction } = useContext(AppContext);
-  const [selectedSlides, setSelectedSlides] = useState([]);
+  const { slides, setSlides, slideAction, setSlideAction, user } = useContext(AppContext);
 
-  function handleRowSelect(selected) {
-    setSelectedSlides(selected.selectedRows);
-  }
-
-  function handleDelete() {
-    selectedSlides.forEach(slide => deleteSlide(slide.id).then(setSelectedSlides([])));
-    setSlideAction(`delete-${v4()}`);
-  }
+  const handleDelete = (state) => {
+    axios.delete(`http://127.0.0.1:3333/slides/delete/${state.id}`, { data: {userId: user.id } })
+      .then(alert("Slide deleted successfully"))
+      .then(setSlideAction(`delete-${v4()}`));
+  };
 
   useEffect(() => {
     async function fetchData() {
-      let data = await listSlides();
-      setSlides(data);
+      axios.get("http://localhost:3333/slides")
+        .then(res => {
+          setSlides(res.data.sort((a,b) => a.order - b.order));
+        })
     }
     fetchData();
   }, [slideAction]);
@@ -38,22 +35,28 @@ export default function SlideshowTable() {
       name: 'Order',
       selector: row => <SlideOrderForm slideId={row.id} slideOrder={row.order}/>,
       sortable: true
-    }
+    },
+    {
+      name: 'Actions',
+      cell: (props) => (
+        <a
+          className='hover:cursor-pointer'
+          onClick={() => {
+            handleDelete(props);
+          }}
+        >
+          <span className='text-red-600'>Delete</span>
+        </a>
+      )
+    },
   ];
 
   return (
     <>
       <h5 className="text-3xl mb-4">Manage slides</h5>
-      {
-        selectedSlides.length > 0 ? 
-        <Button color="failure" onClick={handleDelete}>Delete</Button> :
-        <Button color="failure" disabled>Delete</Button> 
-      }
       <DataTable
         columns={columns}
         data={slides}
-        selectableRows
-        onSelectedRowsChange={handleRowSelect}
         striped
       />
     </>

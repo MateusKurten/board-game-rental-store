@@ -1,8 +1,5 @@
 import { useForm } from "react-hook-form";
-// import { addGame } from "../infra/games";
-import axios from "axios"
-import { storage } from "../infra/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
+import axios from "axios";
 import { useContext } from "react";
 import { AppContext } from "../AppContext";
 import { v4 } from 'uuid';
@@ -10,22 +7,14 @@ import { v4 } from 'uuid';
 export default function GameForm() {
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm({ mode: 'onChange' });
-  const { setGameAction, gameAction, user } = useContext(AppContext);
+  const { setGameAction, user } = useContext(AppContext);
 
   async function submitData(data) {
-    const imageRef = ref(storage, `images/${data.img[0].name}` + v4())
-    uploadBytes(imageRef, data.img[0])
-      .then((snapshot) => {
-        getDownloadURL(snapshot.ref)
-          .then((url) => {
-            data.img = url;
-          })
-          .then(() => axios.post("http://localhost:5001/board-game-rental-store/us-central1/firebaseApp/games/add", {...data, userId: user.id})
-            .then(res => setGameAction(`created-${res.data.id}`))
-          )
-          .then(() => alert("Game added to the catalog!"))
-          .then(() => reset());
-      }).then(console.log(gameAction));
+     axios.post("http://127.0.0.1:3333/games/add", {...data, userId: user.id, id: v4()})
+      .then(res => setGameAction(`created-${res.data.id}`))
+      .then(() => alert("Game added to the catalog!"))
+      .then(() => reset())
+      .catch((error) => alert(error.response.data.message));
   }
 
   return (
@@ -65,9 +54,9 @@ export default function GameForm() {
           </select>
         </div>
         <div className="mb-5 col-span-full">
-          <label htmlFor="img" className=" mb-2 text-sm font-medium text-gray-900 dark:text-white">Image</label>
+          <label htmlFor="img" className=" mb-2 text-sm font-medium text-gray-900 dark:text-white">Image URL</label>
           <input
-            type="file"
+            type="text"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5"
             required
             {...register('img')}
